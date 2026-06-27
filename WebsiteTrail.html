@@ -1,0 +1,359 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .page { background: #FAF8F4; color: #1A1A2E; min-height: 100vh; }
+
+  /* NAV */
+  .nav { background: #3B2D8E; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { color: #fff; font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
+  .nav-logo span { color: #F5A623; }
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.8); font-size: 14px; text-decoration: none; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta { background: #F5A623; color: #1A1A2E; padding: 8px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .nav-cta:hover { background: #e8971a; color: #1A1A2E; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #3B2D8E 0%, #5240C0 60%, #6B4FD8 100%); color: #fff; padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: rgba(245,166,35,0.12); border-radius: 50%; }
+  .hero-eyebrow { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #F5A623; margin-bottom: 1.25rem; font-weight: 600; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; max-width: 700px; margin: 0 auto 1.25rem; letter-spacing: -1px; }
+  .hero h1 em { color: #F5A623; font-style: normal; }
+  .hero-sub { font-size: 17px; color: rgba(255,255,255,0.8); max-width: 520px; margin: 0 auto 2rem; line-height: 1.6; }
+  .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .btn-primary { background: #F5A623; color: #1A1A2E; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: #e8971a; }
+  .btn-ghost { border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; display: inline-block; }
+  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+  /* COUNTER WIDGET */
+  .counter-widget { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; max-width: 560px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+  .counter-item { text-align: center; }
+  .counter-num { font-size: 2.4rem; font-weight: 800; color: #F5A623; line-height: 1; }
+  .counter-label { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .counter-vs { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  /* TRUST BAR */
+  .trust-bar { background: #fff; border-bottom: 1px solid #eee; padding: 1rem 2rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555; font-weight: 500; }
+  .trust-icon { font-size: 18px; }
+
+  /* SECTION */
+  .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #3B2D8E; font-weight: 700; margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.5px; color: #1A1A2E; margin-bottom: 0.75rem; }
+  .section-sub { font-size: 16px; color: #666; max-width: 560px; line-height: 1.6; }
+
+  /* AUDIENCE CARDS */
+  .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .audience-card { background: #fff; border-radius: 12px; padding: 2rem; border: 1px solid #eee; position: relative; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s; cursor: pointer; }
+  .audience-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(59,45,142,0.12); }
+  .audience-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #3B2D8E; }
+  .audience-card.family::before { background: #F5A623; }
+  .audience-card.adult::before { background: #5240C0; }
+  .card-tag { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #3B2D8E; margin-bottom: 0.75rem; }
+  .audience-card.family .card-tag { color: #C47A00; }
+  .audience-card.adult .card-tag { color: #5240C0; }
+  .card-title { font-size: 1.3rem; font-weight: 800; color: #1A1A2E; margin-bottom: 0.5rem; }
+  .card-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.25rem; }
+  .card-features { list-style: none; margin-bottom: 1.5rem; }
+  .card-features li { font-size: 13px; color: #555; padding: 4px 0; display: flex; align-items: center; gap: 8px; }
+  .card-features li::before { content: '✓'; color: #3B2D8E; font-weight: 700; }
+  .audience-card.family .card-features li::before { color: #C47A00; }
+  .audience-card.adult .card-features li::before { color: #5240C0; }
+  .card-link { font-size: 14px; font-weight: 700; color: #3B2D8E; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .card-link:hover { text-decoration: underline; }
+  .audience-card.family .card-link { color: #C47A00; }
+  .audience-card.adult .card-link { color: #5240C0; }
+
+  /* PROOF STRIP */
+  .proof-strip { background: #3B2D8E; padding: 3rem 2rem; }
+  .proof-inner { max-width: 1100px; margin: 0 auto; }
+  .proof-title { color: #fff; font-size: 1.4rem; font-weight: 700; text-align: center; margin-bottom: 2rem; }
+  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .testimonial { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.15); }
+  .t-quote { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 1rem; font-style: italic; }
+  .t-author { font-size: 13px; color: #F5A623; font-weight: 600; }
+  .t-org { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .stars { color: #F5A623; font-size: 14px; margin-bottom: 0.75rem; }
+
+  /* HOW IT WORKS */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 2.5rem; position: relative; }
+  .step { padding: 2rem 1.5rem; background: #fff; border: 1px solid #eee; position: relative; }
+  .step:first-child { border-radius: 12px 0 0 12px; }
+  .step:last-child { border-radius: 0 12px 12px 0; }
+  .step-num { font-size: 2.5rem; font-weight: 900; color: #F0EBF9; line-height: 1; margin-bottom: 0.75rem; }
+  .step-title { font-size: 15px; font-weight: 700; color: #1A1A2E; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 13px; color: #777; line-height: 1.5; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .stat-card { background: #3B2D8E; border-radius: 10px; padding: 1.5rem 1rem; text-align: center; }
+  .stat-num { font-size: 2.2rem; font-weight: 900; color: #F5A623; line-height: 1; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* FAQ */
+  .faq-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 1px; }
+  .faq-item { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #eee; }
+  .faq-q { padding: 1.1rem 1.25rem; font-size: 15px; font-weight: 600; color: #1A1A2E; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .faq-q:hover { background: #f9f7ff; }
+  .faq-chevron { font-size: 18px; color: #3B2D8E; transition: transform 0.2s; }
+  .faq-a { font-size: 14px; color: #555; line-height: 1.7; padding: 0 1.25rem 1.1rem; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+  /* FINAL CTA */
+  .final-cta { background: #F5A623; padding: 4rem 2rem; text-align: center; }
+  .final-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: #1A1A2E; margin-bottom: 0.75rem; letter-spacing: -0.5px; }
+  .final-cta p { font-size: 16px; color: rgba(26,26,46,0.75); max-width: 480px; margin: 0 auto 2rem; }
+  .btn-dark { background: #1A1A2E; color: #fff; padding: 15px 32px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; margin: 0 0.5rem; }
+  .btn-outline-dark { border: 2px solid #1A1A2E; color: #1A1A2E; padding: 13px 32px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; margin: 0 0.5rem; }
+  .cta-note { font-size: 13px; color: rgba(26,26,46,0.55); margin-top: 1rem; }
+
+  /* FOOTER */
+  .footer { background: #1A1A2E; color: rgba(255,255,255,0.6); padding: 2rem; text-align: center; font-size: 13px; }
+  .footer a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 0.75rem; }
+  .footer a:hover { color: #fff; }
+  .footer-top { margin-bottom: 1rem; }
+</style>
+
+<div class="page">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">LevelUp English — redesigned homepage focused on booking immersive English programs in Germany</h2>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">Level<span>Up</span> English</div>
+    <div class="nav-links">
+      <a href="#">For Schools</a>
+      <a href="#">For Families</a>
+      <a href="#">For Adults</a>
+      <a class="nav-cta" href="#">Get a Quote</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Native English immersion · Germany</div>
+    <h1>More English in 5 days than <em>a month abroad.</em></h1>
+    <p class="hero-sub">Immersive English programs for schools, families, and adults — led by native speakers, held in Germany. No passport. No flights. No wasted time.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary">Book a program →</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+
+    <div class="counter-widget">
+      <div class="counter-item">
+        <div class="counter-num" id="hrs-counter">6</div>
+        <div class="counter-label">Hours of English/day</div>
+        <div class="counter-vs">with LevelUp</div>
+      </div>
+      <div class="counter-item" style="display:flex;flex-direction:column;justify-content:center;color:rgba(255,255,255,0.3);font-size:1.5rem;font-weight:300;">vs</div>
+      <div class="counter-item">
+        <div class="counter-num" style="color:rgba(255,255,255,0.4);">~2</div>
+        <div class="counter-label" style="color:rgba(255,255,255,0.4);">Hours of English/day</div>
+        <div class="counter-vs">typical study abroad</div>
+      </div>
+      <div class="counter-item">
+        <div class="counter-num">50%</div>
+        <div class="counter-label">Lower cost</div>
+        <div class="counter-vs">vs London trip</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">🏫</span> 500+ schools served</div>
+    <div class="trust-item"><span class="trust-icon">🌍</span> Native speakers from UK, US, Ireland</div>
+    <div class="trust-item"><span class="trust-icon">⭐</span> 4.9 / 5 teacher rating</div>
+    <div class="trust-item"><span class="trust-icon">📍</span> Programs across Germany</div>
+    <div class="trust-item"><span class="trust-icon">💶</span> Startchancen funding accepted</div>
+  </div>
+
+  <!-- AUDIENCE SECTION -->
+  <div class="section">
+    <div class="section-label">Who we work with</div>
+    <div class="section-title">Pick your program</div>
+    <p class="section-sub">Every program is run by native English speakers with real teaching credentials. Choose the format that fits.</p>
+
+    <div class="audience-grid">
+      <div class="audience-card schools">
+        <div class="card-tag">For Schools</div>
+        <div class="card-title">Class Trips & Project Weeks</div>
+        <p class="card-desc">Custom immersive programs that plug into your school calendar — from a single project day to a full week.</p>
+        <ul class="card-features">
+          <li>Class trips (5-day residential)</li>
+          <li>In-school project weeks (1–5 days)</li>
+          <li>All levels from Klasse 5 upward</li>
+          <li>Startchancen funding eligible</li>
+        </ul>
+        <a href="#" class="card-link">Inquire for your school →</a>
+      </div>
+      <div class="audience-card family">
+        <div class="card-tag">For Families</div>
+        <div class="card-title">Holiday Camps</div>
+        <p class="card-desc">Day camps and overnight camps during school holidays. Kids come back speaking English and asking to go again.</p>
+        <ul class="card-features">
+          <li>Day camps (no overnight)</li>
+          <li>Overnight residential camps</li>
+          <li>Ages 8–17</li>
+          <li>Small groups, native speaker led</li>
+        </ul>
+        <a href="#" class="card-link" style="color:#C47A00">Book a camp spot →</a>
+      </div>
+      <div class="audience-card adult">
+        <div class="card-tag">For Adults</div>
+        <div class="card-title">Weekend Retreats & Bildungsurlaub</div>
+        <p class="card-desc">Intensive weekend immersions and state-accredited Bildungsurlaub courses. Finally get fluent.</p>
+        <ul class="card-features">
+          <li>Weekend immersion retreats</li>
+          <li>Bildungsurlaub (employer-funded)</li>
+          <li>Business & professional English</li>
+          <li>No textbooks. Real conversation.</li>
+        </ul>
+        <a href="#" class="card-link">View adult programs →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="proof-strip">
+    <div class="proof-inner">
+      <div class="proof-title">What teachers are saying</div>
+      <div class="testimonials">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <div class="t-quote">"This is our third time with LevelUp. Language input was higher than on our London trip — and half the cost."</div>
+          <div class="t-author">Herr Heinrich</div>
+          <div class="t-org">Stephaneum Gymnasium · Class Trip Berlin</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <div class="t-quote">"My students spoke more English in day one than in a full week of classroom lessons. The trainers are exceptional."</div>
+          <div class="t-author">Frau Meier</div>
+          <div class="t-org">Gesamtschule Hamburg · Project Week</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <div class="t-quote">"My daughter came home from camp confidently speaking English for the first time. She's already asking to go back."</div>
+          <div class="t-author">Parent, Munich</div>
+          <div class="t-org">Overnight Camp · Summer 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-label">The process</div>
+    <div class="section-title">From inquiry to unforgettable — in 4 steps</div>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Tell us what you need</div>
+        <div class="step-desc">Dates, group size, level. A 5-minute conversation is enough to get started.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">We send a custom quote</div>
+        <div class="step-desc">Non-binding, detailed, and tailored to your budget. Usually within 48 hours.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">We handle the logistics</div>
+        <div class="step-desc">Venue, accommodation, native trainer team, parent communications — all covered.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Your group levels up</div>
+        <div class="step-desc">Show up. Speak English all day. Leave with real confidence and skills.</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">6+</div><div class="stat-label">Hours English per day</div></div>
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Native speaker trainers</div></div>
+      <div class="stat-card"><div class="stat-num">48h</div><div class="stat-label">Quote turnaround</div></div>
+      <div class="stat-card"><div class="stat-num">3×</div><div class="stat-label">Average repeat bookings</div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section" style="padding-top:0">
+    <div class="section-label">Common questions</div>
+    <div class="section-title">Everything you need to know</div>
+
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          How is this better than a school trip to London?
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-a">Students speak far more English per day with LevelUp than on a typical trip abroad — where they spend most time together in their native language. Our programs are designed so English is the only option, all day, every day. And you save 40–60% on travel costs.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Who are the trainers?
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-a">All trainers are native English speakers from the UK, US, Ireland, and beyond — with professional backgrounds in education, performance, or business. They're not just fluent; they know how to make language learning happen naturally.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Can schools use Startchancen funding?
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-a">Yes. We're experienced in working with Startchancen-Förderung and can help you understand how to apply it to your program. Mention it when you inquire and we'll guide you through the process.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Where do programs take place?
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-a">Across Germany — in youth hostels, nature camps, and guesthouses selected for safety and atmosphere. Some programs also run in Austria and Switzerland. We handle all venue logistics, so you don't have to.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          How long does booking take?
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-a">Reach out, get a custom quote within 48 hours, confirm when ready. We handle everything from there — venue, trainer scheduling, parent info packs, and pre-trip prep materials. Most programs book 4–8 weeks in advance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Ready to book? Let's talk.</h2>
+    <p>Tell us your dates and group size. We'll send a no-obligation quote within 48 hours.</p>
+    <a href="#" class="btn-dark">Request a quote</a>
+    <a href="#" class="btn-outline-dark">WhatsApp us</a>
+    <div class="cta-note">Mon–Fri 9am–5pm · +49 30 2359 1386 · info@levelupenglish.de</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-top">
+      <a href="#">Class Trips</a>
+      <a href="#">Project Weeks</a>
+      <a href="#">Holiday Camps</a>
+      <a href="#">Adult Programs</a>
+      <a href="#">Impressum</a>
+      <a href="#">AGBs</a>
+    </div>
+    © 2025 LevelUp English · Berlin
+  </div>
+</div>
+
+<script>
+  let count = 0;
+  const target = 6;
+  const el = document.getElementById('hrs-counter');
+  const interval = setInterval(() => {
+    count += 0.2;
+    el.textContent = Math.min(count, target).toFixed(1);
+    if (count >= target) { el.textContent = target; clearInterval(interval); }
+  }, 40);
+</script>
